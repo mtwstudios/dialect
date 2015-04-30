@@ -51,6 +51,10 @@ trait Json
                     $this->appends[] = $key;
                 }
             }
+            
+            foreach ($this->jsonFields[$col] as $field) {
+            	$this->flagJsonAttribute($field, $col);
+            }
         }
     }
 
@@ -165,6 +169,7 @@ trait Json
     public function setJsonAttribute($attribute, $key, $value)
     {
         $obj = json_decode($this->{$attribute});
+        if ($obj == NULL) $obj = new \stdClass;
         $obj->$key = $value;
         $this->flagJsonAttribute($key, $attribute);
         $this->{$attribute} = json_encode($obj);
