@@ -132,7 +132,7 @@ trait Json
 
         if (array_key_exists($key, $this->jsonAttributes) != false) {
             $obj = json_decode($this->{$this->jsonAttributes[$key]});
-            return $obj->$key;
+            return isset($obj->$key) ? $obj->$key : NULL; // TODO: support default values specified in the model
         } elseif ($isJson) {
             return null;
         }
